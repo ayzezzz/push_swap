@@ -1,32 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zayaz <zayaz@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 12:48:23 by zayaz             #+#    #+#             */
+/*   Updated: 2024/07/05 13:29:00 by zayaz            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void error_message()
+int	error_message(void)
 {
 	ft_printf("Error\n");
-	exit(1);
+	exit(0);
 }
 
-void empty_check(char *argv)
+void	empty_check(char *argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
-
 	while (argv[i] && argv[i] == 32)
 		i++;
 	if (argv[i] == '\0')
 		error_message();
 }
-void argv_digit_check(char *argv)
+
+int	argv_digit_check(char *argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((argv[i]))
 	{
 		if (!ft_isdigit(argv[i]) && argv[i] != 32)
 		{
-			if (argv[i] == '+' || argv[i] == '-') // nullık durumu
+			if (argv[i] == '+' || argv[i] == '-')
 			{
 				if ((!ft_isdigit(argv[i + 1])))
 				{
@@ -38,21 +50,21 @@ void argv_digit_check(char *argv)
 		}
 		i++;
 	}
+	return (1);
 }
 
-void repeat_check(t_list **stack_a)
+void	repeat_check(t_list **stack_a)
 {
-	t_list *lst;
-	t_list *check_node;
-	int temp;
+	t_list	*lst;
+	t_list	*check_node;
+	int		temp;
 
 	lst = *stack_a;
-	while (lst)
+	while (lst != NULL)
 	{
 		temp = lst->content;
 		check_node = lst->next;
-
-		while (check_node)
+		while (check_node != NULL)
 		{
 			if (temp == check_node->content)
 				error_message();
@@ -62,14 +74,14 @@ void repeat_check(t_list **stack_a)
 	}
 }
 
-int sorted_check(t_list **stack_a, int check_num)
+int	sorted_check(t_list **stack_a, int check_num)
 {
-	t_list *lst;
-	t_list *next_node;
-	int temp;
+	t_list	*lst;
+	t_list	*next_node;
+	int		temp;
 
 	lst = *stack_a;
-	while (lst!= NULL)
+	while (lst != NULL)
 	{
 		temp = lst->content;
 		next_node = lst->next;

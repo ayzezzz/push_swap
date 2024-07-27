@@ -1,68 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   argv_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zayaz <zayaz@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 12:48:46 by zayaz             #+#    #+#             */
+/*   Updated: 2024/07/12 12:32:30 by zayaz            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void multiple_argv_split(t_list **stack_a, char **argv, int i)
+static void	num_limit(long num, char *temp)
 {
-    char **temp;
-    int j;
-    int num;
-    t_list *new_node;
+	char	*str;
 
-    num = 0;
-    temp = ft_split(argv[i], 32);
-    j = 0;
-    while (temp[j])
-    {
-        num = ft_atoi(temp[j]);
-        free(temp[j]);
-        new_node = ft_lstnew(num, -1);
-        ft_lstadd_back(stack_a, new_node);
-        j++;
-    }
-    free(temp);
+	str = ft_itoa(num);
+	if (ft_strncmp(temp, str, ft_strlen(temp)) != 0)
+		error_message();
 }
 
-void single_argv_split(t_list **stack_a, char **argv, int i)
+static void	multiple_argv_split(t_list **stack_a, char **argv, int i)
 {
-    char *temp;
-    int num;
-    t_list *new_node;
+	int		j;
+	long	num;
+	char	**temp;
+	t_list	*new_node;
 
-    num = 0;
-    temp = argv[i];
-    num = ft_atoi(temp);
-    new_node = ft_lstnew(num, -1);
-    ft_lstadd_back(stack_a, new_node);
+	temp = ft_split(argv[i], 32);
+	j = 0;
+	while (temp[j])
+	{
+		num = ft_atoi(temp[j]);
+		num_limit(num, temp[j]);
+		free(temp[j]);
+		new_node = ft_lstnew(num, -1);
+		ft_lstadd_back(stack_a, new_node);
+		j++;
+	}
+	free(temp);
 }
 
-void argv_split(char **argv, t_list **stack_a)
+static void	single_argv_split(t_list **stack_a, char **argv, int i)
 {
-    int i;
+	long	num;
+	t_list	*new_node;
 
-    i = 1;
-    while (argv[i])
-    {
-        if (count_string(argv[i], 32) > 1)
-            multiple_argv_split(stack_a, argv, i);
-
-        else
-            single_argv_split(stack_a, argv, i);
-        i++;
-    }
+	num = ft_atoi(argv[i]);
+	num_limit(num, argv[i]);
+	new_node = ft_lstnew(num, -1);
+	ft_lstadd_back(stack_a, new_node);
 }
 
-void argv_check(int argc, char **argv, t_list **stack_a)
+void	argv_split(char **argv, t_list **stack_a, int argc)
 {
-    int i;
-    i = 1;
-    if (argv[1][0] == '\0')
-        exit(0);
-    while (i < argc)
-    {
-        empty_check(argv[i]);
-        argv_digit_check(argv[i]);
-        i++;
-    }
-    argv_split(argv, stack_a);
-    repeat_check(stack_a);
-    sorted_check(stack_a, 1);
+	int	i;
+
+	i = 1;
+	while (argv[i])
+	{
+		if (count_string(argv[i], 32) > 1)
+			multiple_argv_split(stack_a, argv, i);
+		else if (argc != 2)
+			single_argv_split(stack_a, argv, i);
+		else
+			exit(0);
+		i++;
+	}
 }

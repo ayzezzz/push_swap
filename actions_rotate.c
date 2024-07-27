@@ -1,31 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions_rotate.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zayaz <zayaz@student.42istanbul.com.tr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/03 12:49:03 by zayaz             #+#    #+#             */
+/*   Updated: 2024/07/03 12:49:04 by zayaz            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void rotate(t_list **stack)
+static void	rotate(t_list **stack)
 {
-    t_list *temp;
-    t_list *temp_first;
+	t_list	*temp;
+	t_list	*temp_first;
 
-    temp_first= *stack; //ilk elemanı son eleman yaptım
-    *stack = (*stack) -> next; // listenin başını 2. elemana kaydırdım
-    temp = ft_lstlast(*stack); //son elemanı bull
-    temp->next = temp_first;
-    temp_first -> next = NULL; 
+	temp_first = *stack;
+	*stack = (*stack)->next;
+	temp = ft_lstlast(*stack);
+	temp->next = temp_first;
+	temp_first->next = NULL;
 }
 
-void ra(t_list **stack_a)
+void	ra(t_list **stack_a)
 {
-   rotate(stack_a);
-    write(1,"ra\n",3);
-}
-
-void rb(t_list **stack_b)
-{
-   rotate(stack_b);
-    write(1,"rb\n",3);
-}
-void rr(t_list **stack_a, t_list **stack_b)
-{
-    rotate(stack_a);
-    rotate(stack_b);
-    write(1,"rr\n",3);
+	rotate(stack_a);
+	write(1, "ra\n", 3);
 }

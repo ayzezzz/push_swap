@@ -16,6 +16,7 @@ SRC = main.c\
 	  argv_utils.c\
 	  sort_utils1.c\
 	  sort_utils2.c\
+	  radix_sort.c\
 	  flags.c\
 
 OBJ = $(SRC:.c=.o)
